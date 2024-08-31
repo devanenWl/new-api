@@ -320,6 +320,9 @@ func GetCompletionRatio(name string) float64 {
 	if strings.HasPrefix(name, "gpt-4o-gizmo") {
 		name = "gpt-4o-gizmo-*"
 	}
+	if ratio, ok := CompletionRatio[name]; ok {
+		return ratio
+	}
 	if strings.HasPrefix(name, "gpt-3.5") {
 		if name == "gpt-3.5-turbo" || strings.HasSuffix(name, "0125") {
 			// https://openai.com/blog/new-embedding-models-and-api-updates
@@ -388,9 +391,6 @@ func GetCompletionRatio(name string) float64 {
 		return 2
 	case "llama3-70b-8192":
 		return 0.79 / 0.59
-	}
-	if ratio, ok := CompletionRatio[name]; ok {
-		return ratio
 	}
 	return 1
 }
