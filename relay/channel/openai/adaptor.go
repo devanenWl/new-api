@@ -120,7 +120,7 @@ func (a *Adaptor) ConvertAudioRequest(c *gin.Context, info *relaycommon.RelayInf
 			return nil, errors.New("copy file failed")
 		}
 
-		// 关闭 multipart 编写器以设置分界线
+		// Close multipart 编写器以Settings分界线
 		writer.Close()
 		c.Request.Header.Set("Content-Type", writer.FormDataContentType())
 		return &requestBody, nil

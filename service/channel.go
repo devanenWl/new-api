@@ -12,15 +12,15 @@ import (
 // disable & notify
 func DisableChannel(channelId int, channelName string, reason string) {
 	model.UpdateChannelStatusById(channelId, common.ChannelStatusAutoDisabled, reason)
-	subject := fmt.Sprintf("通道「%s」（#%d）已被禁用", channelName, channelId)
-	content := fmt.Sprintf("通道「%s」（#%d）已被禁用，原因：%s", channelName, channelId, reason)
+	subject := fmt.Sprintf("通道「%s」（#%d）已被Disable", channelName, channelId)
+	content := fmt.Sprintf("通道「%s」（#%d）已被Disable，原因：%s", channelName, channelId, reason)
 	notifyRootUser(subject, content)
 }
 
 func EnableChannel(channelId int, channelName string) {
 	model.UpdateChannelStatusById(channelId, common.ChannelStatusEnabled, "")
-	subject := fmt.Sprintf("通道「%s」（#%d）已被启用", channelName, channelId)
-	content := fmt.Sprintf("通道「%s」（#%d）已被启用", channelName, channelId)
+	subject := fmt.Sprintf("通道「%s」（#%d）已被Enable", channelName, channelId)
+	content := fmt.Sprintf("通道「%s」（#%d）已被Enable", channelName, channelId)
 	notifyRootUser(subject, content)
 }
 

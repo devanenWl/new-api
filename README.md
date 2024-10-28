@@ -14,11 +14,11 @@
 > [!IMPORTANT]
 > 使用者必须在遵循 OpenAI 的[使用条款](https://openai.com/policies/terms-of-use)以及**法律法规**的情况下使用，不得用于非法用途。
 > 本项目仅供个人学习使用，不保证稳定性，且不提供任何技术支持。
-> 根据[《生成式人工智能服务管理暂行办法》](http://www.cac.gov.cn/2023-07/13/c_1690898327029107.htm)的要求，请勿对中国地区公众提供一切未经备案的生成式人工智能服务。
+> 根据[《生成式人工智能服务Management暂行办法》](http://www.cac.gov.cn/2023-07/13/c_1690898327029107.htm)的要求，请勿对中国地区公众提供一切未经备案的生成式人工智能服务。
 
 > [!TIP]
-> 最新版Docker镜像：`calciumion/new-api:latest`  
-> 默认账号root 密码123456  
+> 最新版DockerMirror：`calciumion/new-api:latest`  
+> Default账号root Password123456  
 > 更新指令：
 > ```
 > docker run --rm -v /var/run/docker.sock:/var/run/docker.sock containrrr/watchtower -cR
@@ -26,65 +26,65 @@
 
 
 ## 主要变更
-此分叉版本的主要变更如下：
+此分叉Version的主要变更如下：
 
 1. 全新的UI界面（部分界面还待更新）
 2. 添加[Midjourney-Proxy(Plus)](https://github.com/novicezk/midjourney-proxy)接口的支持，[对接文档](Midjourney.md)
-3. 支持在线充值功能，可在系统设置中设置，当前支持的支付接口：
+3. 支持在线Recharge功能，可在System settings中Settings，当前支持的支付接口：
     + [x] 易支付
-4. 支持用key查询使用额度:
-    + 配合项目[neko-api-key-tool](https://github.com/Calcium-Ion/neko-api-key-tool)可实现用key查询使用
-5. 渠道显示已使用额度，支持指定组织访问
+4. 支持用keyQuery使用Quota:
+    + 配合项目[neko-api-key-tool](https://github.com/Calcium-Ion/neko-api-key-tool)可实现用keyQuery使用
+5. Channel显示UsedQuota，支持指定Group织访问
 6. 分页支持选择每页显示数量
 7. 兼容原版One API的数据库，可直接使用原版数据库（one-api.db）
-8. 支持模型按次数收费，可在 系统设置-运营设置 中设置
-9. 支持渠道**加权随机**
+8. 支持Model按次数收费，可在 System settings-Operations settings 中Settings
+9. 支持Channel**加权随机**
 10. 数据看板
-11. 可设置令牌能调用的模型
-12. 支持Telegram授权登录。
-    1. 系统设置-配置登录注册-允许通过Telegram登录
-    2. 对[@Botfather](https://t.me/botfather)输入指令/setdomain
-    3. 选择你的bot，然后输入http(s)://你的网站地址/login
-    4. Telegram Bot 名称是bot username 去掉@后的字符串
+11. 可SettingsAPI Keys能调用的Model
+12. 支持Telegram授权Log in。
+    1. System settings-Configure Login/Registration-允许通过TelegramLog in
+    2. 对[@Botfather](https://t.me/botfather)Enter指令/setdomain
+    3. 选择你的bot，然后Enterhttp(s)://你的网站地址/login
+    4. Telegram Bot Name是bot username 去掉@后的字符串
 13. 添加 [Suno API](https://github.com/Suno-API/Suno-API)接口的支持，[对接文档](Suno.md)
-14. 支持Rerank模型，目前仅兼容Cohere和Jina，可接入Dify，[对接文档](Rerank.md)
+14. 支持RerankModel，目前仅兼容Cohere和Jina，可接入Dify，[对接文档](Rerank.md)
 
-## 模型支持
-此版本额外支持以下模型：
-1. 第三方模型 **gps** （gpt-4-gizmo-*）
+## Model支持
+此Version额外支持以下Model：
+1. 第三方Model **gps** （gpt-4-gizmo-*）
 2. 智谱glm-4v，glm-4v识图
 3. Anthropic Claude 3
-4. [Ollama](https://github.com/ollama/ollama?tab=readme-ov-file)，添加渠道时，密钥可以随便填写，默认的请求地址是[http://localhost:11434](http://localhost:11434)，如果需要修改请在渠道中修改
+4. [Ollama](https://github.com/ollama/ollama?tab=readme-ov-file)，添加Channel时，Key可以随便填写，Default的请求地址是[http://localhost:11434](http://localhost:11434)，如果需要修改请在Channel中修改
 5. [Midjourney-Proxy(Plus)](https://github.com/novicezk/midjourney-proxy)接口，[对接文档](Midjourney.md)
 6. [零一万物](https://platform.lingyiwanwu.com/)
-7. 自定义渠道，支持填入完整调用地址
+7. CustomChannel，支持填入完整调用地址
 8. [Suno API](https://github.com/Suno-API/Suno-API) 接口，[对接文档](Suno.md)
-9. Rerank模型，目前支持[Cohere](https://cohere.ai/)和[Jina](https://jina.ai/)，[对接文档](Rerank.md)
+9. RerankModel，目前支持[Cohere](https://cohere.ai/)和[Jina](https://jina.ai/)，[对接文档](Rerank.md)
 10. Dify
 11. Vertex AI，目前兼容Claude，Gemini，Llama3.1
 
-您可以在渠道中添加自定义模型gpt-4-gizmo-*，此模型并非OpenAI官方模型，而是第三方模型，使用官方key无法调用。
+您可以在Channel中添加CustomModelgpt-4-gizmo-*，此Model并非OpenAI官方Model，而是第三方Model，使用官方keyNone法调用。
 
 ## 比原版One API多出的配置
-- `GENERATE_DEFAULT_TOKEN`：是否为新注册用户生成初始令牌，默认为 `false`。
-- `STREAMING_TIMEOUT`：设置流式一次回复的超时时间，默认为 30 秒。
-- `DIFY_DEBUG`：设置 Dify 渠道是否输出工作流和节点信息到客户端，默认为 `true`。
-- `FORCE_STREAM_OPTION`：是否覆盖客户端stream_options参数，请求上游返回流模式usage，默认为 `true`，建议开启，不影响客户端传入stream_options参数返回结果。
-- `GET_MEDIA_TOKEN`：是统计图片token，默认为 `true`，关闭后将不再在本地计算图片token，可能会导致和上游计费不同，此项覆盖 `GET_MEDIA_TOKEN_NOT_STREAM` 选项作用。
-- `GET_MEDIA_TOKEN_NOT_STREAM`：是否在非流（`stream=false`）情况下统计图片token，默认为 `true`。
-- `UPDATE_TASK`：是否更新异步任务（Midjourney、Suno），默认为 `true`，关闭后将不会更新任务进度。
-- `GEMINI_MODEL_MAP`：Gemini模型指定版本(v1/v1beta)，使用“模型:版本”指定，","分隔，例如：-e GEMINI_MODEL_MAP="gemini-1.5-pro-latest:v1beta,gemini-1.5-pro-001:v1beta"，为空则使用默认配置
-- `COHERE_SAFETY_SETTING`：Cohere模型[安全设置](https://docs.cohere.com/docs/safety-modes#overview)，可选值为 `NONE`, `CONTEXTUAL`，`STRICT`，默认为 `NONE`。
+- `GENERATE_DEFAULT_TOKEN`：是否为新Sign upUsers生成初始API Keys，Default为 `false`。
+- `STREAMING_TIMEOUT`：Settings流式一次回复的超时Time，Default为 30s。
+- `DIFY_DEBUG`：Settings Dify Channel是否输出工作流和节点信息到客户端，Default为 `true`。
+- `FORCE_STREAM_OPTION`：是否覆盖客户端stream_options参数，请求上游返回流模式usage，Default为 `true`，建议开启，不影响客户端传入stream_options参数返回结果。
+- `GET_MEDIA_TOKEN`：是统计图片token，Default为 `true`，Close后将不再在本地计算图片token，可能会导致和上游计费不同，此项覆盖 `GET_MEDIA_TOKEN_NOT_STREAM` 选项作用。
+- `GET_MEDIA_TOKEN_NOT_STREAM`：是否在非流（`stream=false`）情况下统计图片token，Default为 `true`。
+- `UPDATE_TASK`：是否更新异步任务（Midjourney、Suno），Default为 `true`，Close后将不会更新任务进度。
+- `GEMINI_MODEL_MAP`：GeminiModel指定Version(v1/v1beta)，使用“Model:Version”指定，","分隔，For example：-e GEMINI_MODEL_MAP="gemini-1.5-pro-latest:v1beta,gemini-1.5-pro-001:v1beta"，为空则使用Default配置
+- `COHERE_SAFETY_SETTING`：CohereModel[安全Settings](https://docs.cohere.com/docs/safety-modes#overview)，Optional values为 `NONE`, `CONTEXTUAL`，`STRICT`，Default为 `NONE`。
 ## 部署
 ### 部署要求
-- 本地数据库（默认）：SQLite（Docker 部署默认使用 SQLite，必须挂载 `/data` 目录到宿主机）
-- 远程数据库：MySQL 版本 >= 5.7.8，PgSQL 版本 >= 9.6
+- 本地数据库（Default）：SQLite（Docker 部署Default使用 SQLite，必须挂载 `/data` 目录到宿主机）
+- 远程数据库：MySQL Version >= 5.7.8，PgSQL Version >= 9.6
 ### 基于 Docker 进行部署
 ```shell
 # 使用 SQLite 的部署命令：
 docker run --name new-api -d --restart always -p 3000:3000 -e TZ=Asia/Shanghai -v /home/ubuntu/data/new-api:/data calciumion/new-api:latest
 # 使用 MySQL 的部署命令，在上面的基础上添加 `-e SQL_DSN="root:123456@tcp(localhost:3306)/oneapi"`，请自行修改数据库连接参数。
-# 例如：
+# For example：
 docker run --name new-api -d --restart always -p 3000:3000 -e SQL_DSN="root:123456@tcp(localhost:3306)/oneapi" -e TZ=Asia/Shanghai -v /home/ubuntu/data/new-api:/data calciumion/new-api:latest
 ```
 ### 使用宝塔面板Docker功能部署
@@ -92,35 +92,35 @@ docker run --name new-api -d --restart always -p 3000:3000 -e SQL_DSN="root:1234
 # 使用 SQLite 的部署命令：
 docker run --name new-api -d --restart always -p 3000:3000 -e TZ=Asia/Shanghai -v /www/wwwroot/new-api:/data calciumion/new-api:latest
 # 使用 MySQL 的部署命令，在上面的基础上添加 `-e SQL_DSN="root:123456@tcp(localhost:3306)/oneapi"`，请自行修改数据库连接参数。
-# 例如：
-# 注意：数据库要开启远程访问，并且只允许服务器IP访问
-docker run --name new-api -d --restart always -p 3000:3000 -e SQL_DSN="root:123456@tcp(宝塔的服务器地址:宝塔数据库端口)/宝塔数据库名称" -e TZ=Asia/Shanghai -v /www/wwwroot/new-api:/data calciumion/new-api:latest
-# 注意：数据库要开启远程访问，并且只允许服务器IP访问
+# For example：
+# Note：数据库要开启远程访问，并且只允许服务器IP访问
+docker run --name new-api -d --restart always -p 3000:3000 -e SQL_DSN="root:123456@tcp(宝塔的Server Address:宝塔数据库端口)/宝塔数据库Name" -e TZ=Asia/Shanghai -v /www/wwwroot/new-api:/data calciumion/new-api:latest
+# Note：数据库要开启远程访问，并且只允许服务器IP访问
 ```
 
-## 渠道重试
-渠道重试功能已经实现，可以在`设置->运营设置->通用设置`设置重试次数，**建议开启缓存**功能。  
-如果开启了重试功能，第一次重试使用同优先级，第二次重试使用下一个优先级，以此类推。
-### 缓存设置方法
-1. `REDIS_CONN_STRING`：设置之后将使用 Redis 作为缓存使用。
+## ChannelRetry
+ChannelRetry功能已经实现，可以在`Settings->Operations settings->General Settings`SettingsRetry次数，**建议开启缓存**功能。  
+如果开启了Retry功能，第一次Retry使用同优先级，第二次Retry使用下一个优先级，以此类推。
+### 缓存Settings方法
+1. `REDIS_CONN_STRING`：Settings之后将使用 Redis 作为缓存使用。
     + 例子：`REDIS_CONN_STRING=redis://default:redispw@localhost:49153`
-2. `MEMORY_CACHE_ENABLED`：启用内存缓存（如果设置了`REDIS_CONN_STRING`，则无需手动设置），会导致用户额度的更新存在一定的延迟，可选值为 `true` 和 `false`，未设置则默认为 `false`。
+2. `MEMORY_CACHE_ENABLED`：Enable内存缓存（如果Settings了`REDIS_CONN_STRING`，则None需手动Settings），会导致UsersQuota的更新存在一定的延迟，Optional values为 `true` 和 `false`，未Settings则Default为 `false`。
     + 例子：`MEMORY_CACHE_ENABLED=true`
-### 为什么有的时候没有重试
-这些错误码不会重试：400，504，524
-### 我想让400也重试
-在`渠道->编辑`中，将`状态码复写`改为
+### 为什么有的时候没有Retry
+这些错误码不会Retry：400，504，524
+### 我想让400也Retry
+在`Channel->Edit`中，将`Status码复写`改为
 ```json
 {
   "400": "500"
 }
 ```
-可以实现400错误转为500错误，从而重试
+可以实现400错误转为500错误，从而Retry
 
-## Midjourney接口设置文档
+## Midjourney接口Settings文档
 [对接文档](Midjourney.md)
 
-## Suno接口设置文档
+## Suno接口Settings文档
 [对接文档](Suno.md)
 
 ## 界面截图
@@ -140,7 +140,7 @@ docker run --name new-api -d --restart always -p 3000:3000 -e SQL_DSN="root:1234
 - [One API](https://github.com/songquanpeng/one-api)：原版项目
 - [Midjourney-Proxy](https://github.com/novicezk/midjourney-proxy)：Midjourney接口支持
 - [chatnio](https://github.com/Deeptrain-Community/chatnio)：下一代 AI 一站式 B/C 端解决方案
-- [neko-api-key-tool](https://github.com/Calcium-Ion/neko-api-key-tool)：用key查询使用额度
+- [neko-api-key-tool](https://github.com/Calcium-Ion/neko-api-key-tool)：用keyQuery使用Quota
 
 ## Star History
 

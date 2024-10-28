@@ -85,7 +85,7 @@ func FetchUpstreamModels(c *gin.Context) {
 	if channel.Type != common.ChannelTypeOpenAI {
 		c.JSON(http.StatusOK, gin.H{
 			"success": false,
-			"message": "仅支持 OpenAI 类型渠道",
+			"message": "仅支持 OpenAI TypeChannel",
 		})
 		return
 	}

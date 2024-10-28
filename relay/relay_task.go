@@ -78,7 +78,7 @@ func RelayTaskSubmit(c *gin.Context, relayMode int) (taskErr *dto.TaskError) {
 				return
 			}
 			if channel.Status != common.ChannelStatusEnabled {
-				return service.TaskErrorWrapperLocal(errors.New("该任务所属渠道已被禁用"), "task_channel_disable", http.StatusBadRequest)
+				return service.TaskErrorWrapperLocal(errors.New("该任务所属Channel已被Disable"), "task_channel_disable", http.StatusBadRequest)
 			}
 			c.Set("base_url", channel.GetBaseURL())
 			c.Set("channel_id", originTask.ChannelId)
@@ -122,7 +122,7 @@ func RelayTaskSubmit(c *gin.Context, relayMode int) (taskErr *dto.TaskError) {
 			}
 			if quota != 0 {
 				tokenName := c.GetString("token_name")
-				logContent := fmt.Sprintf("模型固定价格 %.2f，分组倍率 %.2f，操作 %s", modelPrice, groupRatio, relayInfo.Action)
+				logContent := fmt.Sprintf("Model固定价格 %.2f，group rate %.2f，Operation %s", modelPrice, groupRatio, relayInfo.Action)
 				other := make(map[string]interface{})
 				other["model_price"] = modelPrice
 				other["group_ratio"] = groupRatio

@@ -26,8 +26,8 @@ type FetchReq struct {
 
 type SunoDataResponse struct {
 	TaskID     string          `json:"task_id" gorm:"type:varchar(50);index"`
-	Action     string          `json:"action" gorm:"type:varchar(40);index"` // 任务类型, song, lyrics, description-mode
-	Status     string          `json:"status" gorm:"type:varchar(20);index"` // 任务状态, submitted, queueing, processing, success, failed
+	Action     string          `json:"action" gorm:"type:varchar(40);index"` // 任务Type, song, lyrics, description-mode
+	Status     string          `json:"status" gorm:"type:varchar(20);index"` // 任务Status, submitted, queueing, processing, success, failed
 	FailReason string          `json:"fail_reason"`
 	SubmitTime int64           `json:"submit_time" gorm:"index"`
 	StartTime  int64           `json:"start_time" gorm:"index"`
@@ -80,8 +80,8 @@ func (t *TaskResponse[T]) IsSuccess() bool {
 
 type TaskDto struct {
 	TaskID     string          `json:"task_id"` // 第三方id，不一定有/ song id\ Task id
-	Action     string          `json:"action"`  // 任务类型, song, lyrics, description-mode
-	Status     string          `json:"status"`  // 任务状态, submitted, queueing, processing, success, failed
+	Action     string          `json:"action"`  // 任务Type, song, lyrics, description-mode
+	Status     string          `json:"status"`  // 任务Status, submitted, queueing, processing, success, failed
 	FailReason string          `json:"fail_reason"`
 	SubmitTime int64           `json:"submit_time"`
 	StartTime  int64           `json:"start_time"`

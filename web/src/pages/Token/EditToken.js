@@ -142,12 +142,12 @@ const EditToken = (props) => {
     loadGroups();
   }, [isEdit]);
 
-  // 新增 state 变量 tokenCount 来记录用户想要创建的令牌数量，默认为 1
+  // 新增 state 变量 tokenCount 来记录Users想要创建的API Keys数量，Default为 1
   const [tokenCount, setTokenCount] = useState(1);
 
   // 新增处理 tokenCount 变化的函数
   const handleTokenCountChange = (value) => {
-    // 确保用户输入的是正整数
+    // 确保UsersEnter的是正整数
     const count = parseInt(value, 10);
     if (!isNaN(count) && count > 0) {
       setTokenCount(count);
@@ -170,13 +170,13 @@ const EditToken = (props) => {
   const submit = async () => {
     setLoading(true);
     if (isEdit) {
-      // 编辑令牌的逻辑保持不变
+      // EditAPI Keys的逻辑保持不变
       let localInputs = { ...inputs };
       localInputs.remain_quota = parseInt(localInputs.remain_quota);
       if (localInputs.expired_time !== -1) {
         let time = Date.parse(localInputs.expired_time);
         if (isNaN(time)) {
-          showError('过期时间格式错误！');
+          showError('Expiration time format error!');
           setLoading(false);
           return;
         }
@@ -189,19 +189,19 @@ const EditToken = (props) => {
       });
       const { success, message } = res.data;
       if (success) {
-        showSuccess('令牌更新成功！');
+        showSuccess('Token updated successfully！');
         props.refresh();
         props.handleClose();
       } else {
         showError(message);
       }
     } else {
-      // 处理新增多个令牌的情况
-      let successCount = 0; // 记录成功创建的令牌数量
+      // 处理新增多个API Keys的情况
+      let successCount = 0; // 记录成功创建的API Keys数量
       for (let i = 0; i < tokenCount; i++) {
         let localInputs = { ...inputs };
         if (i !== 0) {
-          // 如果用户想要创建多个令牌，则给每个令牌一个序号后缀
+          // 如果Users想要创建多个API Keys，则给每个API Keys一个序号后缀
           localInputs.name = `${inputs.name}-${generateRandomSuffix()}`;
         }
         localInputs.remain_quota = parseInt(localInputs.remain_quota);
@@ -209,7 +209,7 @@ const EditToken = (props) => {
         if (localInputs.expired_time !== -1) {
           let time = Date.parse(localInputs.expired_time);
           if (isNaN(time)) {
-            showError('过期时间格式错误！');
+            showError('Expiration time format error!');
             setLoading(false);
             break;
           }
@@ -229,7 +229,7 @@ const EditToken = (props) => {
 
       if (successCount > 0) {
         showSuccess(
-          `${successCount}个令牌创建成功，请在列表页面点击复制获取令牌！`,
+          `${successCount}个Token created successfully, please click copy on the list page to get the token!`,
         );
         props.refresh();
         props.handleClose();
@@ -237,7 +237,7 @@ const EditToken = (props) => {
     }
     setLoading(false);
     setInputs(originInputs); // 重置表单
-    setTokenCount(1); // 重置数量为默认值
+    setTokenCount(1); // 重置数量为Default值
   };
 
   return (
@@ -245,7 +245,7 @@ const EditToken = (props) => {
       <SideSheet
         placement={isEdit ? 'right' : 'left'}
         title={
-          <Title level={3}>{isEdit ? '更新令牌信息' : '创建新的令牌'}</Title>
+          <Title level={3}>{isEdit ? 'Update key information' : 'Create a new key'}</Title>
         }
         headerStyle={{ borderBottom: '1px solid var(--semi-color-border)' }}
         bodyStyle={{ borderBottom: '1px solid var(--semi-color-border)' }}
@@ -254,7 +254,7 @@ const EditToken = (props) => {
           <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
             <Space>
               <Button theme='solid' size={'large'} onClick={submit}>
-                提交
+                Submit
               </Button>
               <Button
                 theme='solid'
@@ -262,7 +262,7 @@ const EditToken = (props) => {
                 type={'tertiary'}
                 onClick={handleCancel}
               >
-                取消
+                Cancel
               </Button>
             </Space>
           </div>
@@ -274,9 +274,9 @@ const EditToken = (props) => {
         <Spin spinning={loading}>
           <Input
             style={{ marginTop: 20 }}
-            label='名称'
+            label='Name'
             name='name'
-            placeholder={'请输入名称'}
+            placeholder={'Please enter a name'}
             onChange={(value) => handleInputChange('name', value)}
             value={name}
             autoComplete='new-password'
@@ -284,9 +284,9 @@ const EditToken = (props) => {
           />
           <Divider />
           <DatePicker
-            label='过期时间'
+            label='Expiration time'
             name='expired_time'
-            placeholder={'请选择过期时间'}
+            placeholder={'请选择Expiration time'}
             onChange={(value) => handleInputChange('expired_time', value)}
             value={expired_time}
             autoComplete='new-password'
@@ -300,7 +300,7 @@ const EditToken = (props) => {
                   setExpiredTime(0, 0, 0, 0);
                 }}
               >
-                永不过期
+                Never expires
               </Button>
               <Button
                 type={'tertiary'}
@@ -333,16 +333,16 @@ const EditToken = (props) => {
           <Banner
             type={'warning'}
             description={
-              '注意，令牌的额度仅用于限制令牌本身的最大额度使用量，实际的使用受到账户的剩余额度限制。'
+              'Note that the quota of the token is only used to limit the maximum quota usage of the token itself, and the actual usage is limited by the remaining quota of the account.'
             }
           ></Banner>
           <div style={{ marginTop: 20 }}>
-            <Typography.Text>{`额度${renderQuotaWithPrompt(remain_quota)}`}</Typography.Text>
+            <Typography.Text>{`Quota${renderQuotaWithPrompt(remain_quota)}`}</Typography.Text>
           </div>
           <AutoComplete
             style={{ marginTop: 8 }}
             name='remain_quota'
-            placeholder={'请输入额度'}
+            placeholder={'Please enter the quota'}
             onChange={(value) => handleInputChange('remain_quota', value)}
             value={remain_quota}
             autoComplete='new-password'
@@ -367,7 +367,7 @@ const EditToken = (props) => {
               <AutoComplete
                 style={{ marginTop: 8 }}
                 label='数量'
-                placeholder={'请选择或输入创建令牌的数量'}
+                placeholder={'请选择或EnterCreate Key的数量'}
                 onChange={(value) => handleTokenCountChange(value)}
                 onSelect={(value) => handleTokenCountChange(value)}
                 value={tokenCount.toString()}
@@ -392,7 +392,7 @@ const EditToken = (props) => {
                 setUnlimitedQuota();
               }}
             >
-              {unlimited_quota ? '取消无限额度' : '设为无限额度'}
+              {unlimited_quota ? 'Cancel unlimited quota' : 'Set to unlimited quota'}
             </Button>
           </div>
           <Divider />
@@ -419,14 +419,14 @@ const EditToken = (props) => {
                 }
               ></Checkbox>
               <Typography.Text>
-                启用模型限制（非必要，不建议启用）
+                EnableModel限制（非必要，不建议Enable）
               </Typography.Text>
             </Space>
           </div>
 
           <Select
             style={{ marginTop: 8 }}
-            placeholder={'请选择该渠道所支持的模型'}
+            placeholder={'Please select the model supported by the channel'}
             name='models'
             required
             multiple
@@ -440,12 +440,12 @@ const EditToken = (props) => {
             disabled={!model_limits_enabled}
           />
           <div style={{ marginTop: 10 }}>
-            <Typography.Text>令牌分组，默认为用户的分组</Typography.Text>
+            <Typography.Text>API KeysGroup，Default为Users的Group</Typography.Text>
           </div>
           {groups.length > 0 ?
             <Select
               style={{ marginTop: 8 }}
-              placeholder={'令牌分组，默认为用户的分组'}
+              placeholder={'API KeysGroup，Default为Users的Group'}
               name='gruop'
               required
               selection
@@ -458,7 +458,7 @@ const EditToken = (props) => {
             />:
             <Select
               style={{ marginTop: 8 }}
-              placeholder={'管理员未设置用户可选分组'}
+              placeholder={'Administrator未SettingsUsers可选Group'}
               name='gruop'
               disabled={true}
             />

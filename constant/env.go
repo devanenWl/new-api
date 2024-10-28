@@ -47,5 +47,5 @@ func InitEnv() {
 	}
 }
 
-// 是否生成初始令牌，默认关闭。
+// 是否生成初始API Keys，DefaultClose。
 var GenerateDefaultToken = common.GetEnvOrDefaultBool("GENERATE_DEFAULT_TOKEN", false)

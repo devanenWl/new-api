@@ -63,7 +63,7 @@ func getTokenEncoder(model string) *tiktoken.Tiktoken {
 	if ok && tokenEncoder != nil {
 		return tokenEncoder
 	}
-	// 如果ok（即model在tokenEncoderMap中），但是tokenEncoder为nil，说明可能是自定义模型
+	// 如果ok（即model在tokenEncoderMap中），但是tokenEncoder为nil，说明可能是CustomModel
 	if ok {
 		tokenEncoder, err := tiktoken.EncodingForModel(model)
 		if err != nil {
@@ -73,7 +73,7 @@ func getTokenEncoder(model string) *tiktoken.Tiktoken {
 		tokenEncoderMap[model] = tokenEncoder
 		return tokenEncoder
 	}
-	// 如果model不在tokenEncoderMap中，直接返回默认的tokenEncoder
+	// 如果model不在tokenEncoderMap中，直接返回Default的tokenEncoder
 	return getModelDefaultTokenEncoder(model)
 }
 

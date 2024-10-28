@@ -46,13 +46,13 @@ func RelayMidjourneyImage(c *gin.Context) {
 		})
 		return
 	}
-	// 从Content-Type头获取MIME类型
+	// 从Content-Type头获取MIMEType
 	contentType := resp.Header.Get("Content-Type")
 	if contentType == "" {
-		// 如果无法确定内容类型，则默认为jpeg
+		// 如果None法确定内容Type，则Default为jpeg
 		contentType = "image/jpeg"
 	}
-	// 设置响应的内容类型
+	// Settings响应的内容Type
 	c.Writer.Header().Set("Content-Type", contentType)
 	// 将图片流式传输到响应体
 	_, err = io.Copy(c.Writer, resp.Body)
@@ -158,7 +158,7 @@ func RelaySwapFace(c *gin.Context) *dto.MidjourneyResponse {
 	}
 	modelName := service.CoverActionToModelName(constant.MjActionSwapFace)
 	modelPrice, success := common.GetModelPrice(modelName, true)
-	// 如果没有配置价格，则使用默认价格
+	// 如果没有配置价格，则使用Default价格
 	if !success {
 		defaultPrice, ok := common.GetDefaultModelRatioMap()[modelName]
 		if !ok {
@@ -203,7 +203,7 @@ func RelaySwapFace(c *gin.Context) *dto.MidjourneyResponse {
 			}
 			if quota != 0 {
 				tokenName := c.GetString("token_name")
-				logContent := fmt.Sprintf("模型固定价格 %.2f，分组倍率 %.2f，操作 %s", modelPrice, groupRatio, constant.MjActionSwapFace)
+				logContent := fmt.Sprintf("Model固定价格 %.2f，group rate %.2f，Operation %s", modelPrice, groupRatio, constant.MjActionSwapFace)
 				other := make(map[string]interface{})
 				other["model_price"] = modelPrice
 				other["group_ratio"] = groupRatio
@@ -262,7 +262,7 @@ func RelayMidjourneyTaskImageSeed(c *gin.Context) *dto.MidjourneyResponse {
 		return service.MidjourneyErrorWrapper(constant.MjRequestError, "get_channel_info_failed")
 	}
 	if channel.Status != common.ChannelStatusEnabled {
-		return service.MidjourneyErrorWrapper(constant.MjRequestError, "该任务所属渠道已被禁用")
+		return service.MidjourneyErrorWrapper(constant.MjRequestError, "该任务所属Channel已被Disable")
 	}
 	c.Set("channel_id", originTask.ChannelId)
 	c.Request.Header.Set("Authorization", fmt.Sprintf("Bearer %s", channel.Key))
@@ -431,19 +431,19 @@ func RelayMidjourneySubmit(c *gin.Context, relayMode int) *dto.MidjourneyRespons
 				return service.MidjourneyErrorWrapper(constant.MjRequestError, "get_channel_info_failed")
 			}
 			if channel.Status != common.ChannelStatusEnabled {
-				return service.MidjourneyErrorWrapper(constant.MjRequestError, "该任务所属渠道已被禁用")
+				return service.MidjourneyErrorWrapper(constant.MjRequestError, "该任务所属Channel已被Disable")
 			}
 			c.Set("base_url", channel.GetBaseURL())
 			c.Set("channel_id", originTask.ChannelId)
 			c.Request.Header.Set("Authorization", fmt.Sprintf("Bearer %s", channel.Key))
-			log.Printf("检测到此操作为放大、变换、重绘，获取原channel信息: %s,%s", strconv.Itoa(originTask.ChannelId), channel.GetBaseURL())
+			log.Printf("检测到此Operation为放大、变换、重绘，获取原channel信息: %s,%s", strconv.Itoa(originTask.ChannelId), channel.GetBaseURL())
 		}
 		midjRequest.Prompt = originTask.Prompt
 
 		//if channelType == common.ChannelTypeMidjourneyPlus {
 		//	// plus
 		//} else {
-		//	// 普通版渠道
+		//	// 普通版Channel
 		//
 		//}
 	}
@@ -463,7 +463,7 @@ func RelayMidjourneySubmit(c *gin.Context, relayMode int) *dto.MidjourneyRespons
 
 	modelName := service.CoverActionToModelName(midjRequest.Action)
 	modelPrice, success := common.GetModelPrice(modelName, true)
-	// 如果没有配置价格，则使用默认价格
+	// 如果没有配置价格，则使用Default价格
 	if !success {
 		defaultPrice, ok := common.GetDefaultModelRatioMap()[modelName]
 		if !ok {
@@ -508,7 +508,7 @@ func RelayMidjourneySubmit(c *gin.Context, relayMode int) *dto.MidjourneyRespons
 			}
 			if quota != 0 {
 				tokenName := c.GetString("token_name")
-				logContent := fmt.Sprintf("模型固定价格 %.2f，分组倍率 %.2f，操作 %s，ID %s", modelPrice, groupRatio, midjRequest.Action, midjResponse.Result)
+				logContent := fmt.Sprintf("Model固定价格 %.2f，group rate %.2f，Operation %s，ID %s", modelPrice, groupRatio, midjRequest.Action, midjResponse.Result)
 				other := make(map[string]interface{})
 				other["model_price"] = modelPrice
 				other["group_ratio"] = groupRatio
@@ -521,12 +521,12 @@ func RelayMidjourneySubmit(c *gin.Context, relayMode int) *dto.MidjourneyRespons
 	}(c.Request.Context())
 
 	// 文档：https://github.com/novicezk/midjourney-proxy/blob/main/docs/api.md
-	//1-提交成功
+	//1-Submit成功
 	// 21-任务已存在（处理中或者有结果了） {"code":21,"description":"任务已存在","result":"0741798445574458","properties":{"status":"SUCCESS","imageUrl":"https://xxxx"}}
 	// 22-排队中 {"code":22,"description":"排队中，前面还有1个任务","result":"0741798445574458","properties":{"numberOfQueues":1,"discordInstanceId":"1118138338562560102"}}
 	// 23-队列已满，请稍后再试 {"code":23,"description":"队列已满，请稍后尝试","result":"14001929738841620","properties":{"discordInstanceId":"1118138338562560102"}}
 	// 24-prompt包含敏感词 {"code":24,"description":"可能包含敏感词","properties":{"promptEn":"nude body","bannedWord":"nude"}}
-	// other: 提交错误，description为错误描述
+	// other: Submit错误，description为错误描述
 	midjourneyTask := &model.Midjourney{
 		UserId:      userId,
 		Code:        midjResponse.Code,
@@ -547,7 +547,7 @@ func RelayMidjourneySubmit(c *gin.Context, relayMode int) *dto.MidjourneyRespons
 		Quota:       quota,
 	}
 	if midjResponse.Code == 3 {
-		//无实例账号自动禁用渠道（No available account instance）
+		//None实例账号自动DisableChannel（No available account instance）
 		channel, err := model.GetChannelById(midjourneyTask.ChannelId, true)
 		if err != nil {
 			common.SysError("get_channel_null: " + err.Error())
@@ -557,7 +557,7 @@ func RelayMidjourneySubmit(c *gin.Context, relayMode int) *dto.MidjourneyRespons
 		}
 	}
 	if midjResponse.Code != 1 && midjResponse.Code != 21 && midjResponse.Code != 22 {
-		//非1-提交成功,21-任务已存在和22-排队中，则记录错误原因
+		//非1-Submit成功,21-任务已存在和22-排队中，则记录错误原因
 		midjourneyTask.FailReason = midjResponse.Description
 		consumeQuota = false
 	}

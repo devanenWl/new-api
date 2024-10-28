@@ -31,7 +31,7 @@ func DecodeBase64ImageData(base64String string) (image.Config, string, string, e
 	return config, format, base64String, err
 }
 
-// GetImageFromUrl 获取图片的类型和base64编码的数据
+// GetImageFromUrl 获取图片的Type和base64编码的数据
 func GetImageFromUrl(url string) (mimeType string, data string, err error) {
 	resp, err := DoImageRequest(url)
 	if err != nil {
@@ -73,7 +73,7 @@ func DecodeUrlImageData(imageUrl string) (image.Config, string, error) {
 		n, _ := io.ReadFull(response.Body, additionalData)
 		readData = append(readData, additionalData[:n]...)
 
-		// 使用io.MultiReader组合已经读取的数据和response.Body
+		// 使用io.MultiReaderGroup合已经读取的数据和response.Body
 		limitReader := io.MultiReader(bytes.NewReader(readData), response.Body)
 
 		var config image.Config

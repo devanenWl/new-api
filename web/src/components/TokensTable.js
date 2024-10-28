@@ -34,13 +34,13 @@ function renderStatus(status, model_limits_enabled = false) {
       if (model_limits_enabled) {
         return (
           <Tag color='green' size='large'>
-            已启用：限制模型
+            Enabled：限制Model
           </Tag>
         );
       } else {
         return (
           <Tag color='green' size='large'>
-            已启用
+            Enabled
           </Tag>
         );
       }
@@ -48,28 +48,28 @@ function renderStatus(status, model_limits_enabled = false) {
       return (
         <Tag color='red' size='large'>
           {' '}
-          已禁用{' '}
+          Disabled{' '}
         </Tag>
       );
     case 3:
       return (
         <Tag color='yellow' size='large'>
           {' '}
-          已过期{' '}
+          Expired{' '}
         </Tag>
       );
     case 4:
       return (
         <Tag color='grey' size='large'>
           {' '}
-          已耗尽{' '}
+          Exhausted{' '}
         </Tag>
       );
     default:
       return (
         <Tag color='black' size='large'>
           {' '}
-          未知状态{' '}
+          Unknown status{' '}
         </Tag>
       );
   }
@@ -79,11 +79,11 @@ const TokensTable = () => {
 
   const columns = [
     {
-      title: '名称',
+      title: 'Name',
       dataIndex: 'name',
     },
     {
-      title: '状态',
+      title: 'Status',
       dataIndex: 'status',
       key: 'status',
       render: (text, record, index) => {
@@ -96,21 +96,21 @@ const TokensTable = () => {
       },
     },
     {
-      title: '已用额度',
+      title: 'Used quota',
       dataIndex: 'used_quota',
       render: (text, record, index) => {
         return <div>{renderQuota(parseInt(text))}</div>;
       },
     },
     {
-      title: '剩余额度',
+      title: 'Remaining quota',
       dataIndex: 'remain_quota',
       render: (text, record, index) => {
         return (
           <div>
             {record.unlimited_quota ? (
               <Tag size={'large'} color={'white'}>
-                无限制
+                Unlimited
               </Tag>
             ) : (
               <Tag size={'large'} color={'light-blue'}>
@@ -122,19 +122,19 @@ const TokensTable = () => {
       },
     },
     {
-      title: '创建时间',
+      title: 'Creation time',
       dataIndex: 'created_time',
       render: (text, record, index) => {
         return <div>{renderTimestamp(text)}</div>;
       },
     },
     {
-      title: '过期时间',
+      title: 'Expiration time',
       dataIndex: 'expired_time',
       render: (text, record, index) => {
         return (
           <div>
-            {record.expired_time === -1 ? '永不过期' : renderTimestamp(text)}
+            {record.expired_time === -1 ? 'Never expires' : renderTimestamp(text)}
           </div>
         );
       },
@@ -199,7 +199,7 @@ const TokensTable = () => {
 
           } catch (e) {
             console.log(e);
-            showError('聊天链接配置错误，请联系管理员');
+            showError('Chat链接配置错误，请联系Administrator');
           }
         }
         return (
@@ -221,24 +221,24 @@ const TokensTable = () => {
                 await copyText('sk-' + record.key);
               }}
             >
-              复制
+              Copy
             </Button>
             <SplitButtonGroup
               style={{ marginRight: 1 }}
-              aria-label='项目操作按钮组'
+              aria-label='项目Operation按钮Group'
             >
               <Button
                 theme='light'
                 style={{ color: 'rgba(var(--semi-teal-7), 1)' }}
                 onClick={() => {
                   if (chatsArray.length === 0) {
-                    showError('请联系管理员配置聊天链接');
+                    showError('请联系Administrator配置Chat链接');
                   } else {
                     onOpenLink('default', chats[0][Object.keys(chats[0])[0]], record);
                   }
                 }}
               >
-                聊天
+                Chat
               </Button>
               <Dropdown
                 trigger='click'
@@ -256,7 +256,7 @@ const TokensTable = () => {
               </Dropdown>
             </SplitButtonGroup>
             <Popconfirm
-              title='确定是否要删除此令牌？'
+              title='确定是否要Delete此API Keys？'
               content='此修改将不可逆'
               okType={'danger'}
               position={'left'}
@@ -267,7 +267,7 @@ const TokensTable = () => {
               }}
             >
               <Button theme='light' type='danger' style={{ marginRight: 1 }}>
-                删除
+                Delete
               </Button>
             </Popconfirm>
             {record.status === 1 ? (
@@ -279,7 +279,7 @@ const TokensTable = () => {
                   manageToken(record.id, 'disable', record);
                 }}
               >
-                禁用
+                Disable
               </Button>
             ) : (
               <Button
@@ -290,7 +290,7 @@ const TokensTable = () => {
                   manageToken(record.id, 'enable', record);
                 }}
               >
-                启用
+                Enable
               </Button>
             )}
             <Button
@@ -302,7 +302,7 @@ const TokensTable = () => {
                 setShowEdit(true);
               }}
             >
-              编辑
+              Edit
             </Button>
           </div>
         );
@@ -371,10 +371,10 @@ const TokensTable = () => {
 
   const copyText = async (text) => {
     if (await copy(text)) {
-      showSuccess('已复制到剪贴板！');
+      showSuccess('Copied to clipboard!');
     } else {
       Modal.error({
-        title: '无法复制到剪贴板，请手动复制',
+        title: 'Unable to copy to clipboard，Please copy manually',
         content: text,
         size: 'large',
       });
@@ -421,7 +421,7 @@ const TokensTable = () => {
     //     break;
     //   default:
     //     if (!chatLink) {
-    //       showError('管理员未设置聊天链接');
+    //       showError('Administrator未SettingsChat链接');
     //       return;
     //     }
     //     url = defaultUrl;
@@ -469,7 +469,7 @@ const TokensTable = () => {
     }
     const { success, message } = res.data;
     if (success) {
-      showSuccess('操作成功完成！');
+      showSuccess('Operation successfully completed!');
       let token = res.data.data;
       let newTokens = [...tokens];
       // let realIdx = (activePage - 1) * ITEMS_PER_PAGE + idx;
@@ -572,7 +572,7 @@ const TokensTable = () => {
         <Form.Input
           field='keyword'
           label='搜索关键字'
-          placeholder='令牌名称'
+          placeholder='Key name'
           value={searchKeyword}
           loading={searching}
           onChange={handleKeywordChange}
@@ -580,20 +580,20 @@ const TokensTable = () => {
         <Form.Input
           field='token'
           label='Key'
-          placeholder='密钥'
+          placeholder='Key'
           value={searchToken}
           loading={searching}
           onChange={handleSearchTokenChange}
         />
         <Button
-          label='查询'
+          label='Query'
           type='primary'
           htmlType='submit'
           className='btn-margin-right'
           onClick={searchTokens}
           style={{ marginRight: 8 }}
         >
-          查询
+          Query
         </Button>
       </Form>
 
@@ -630,14 +630,14 @@ const TokensTable = () => {
           setShowEdit(true);
         }}
       >
-        添加令牌
+        添加API Keys
       </Button>
       <Button
-        label='复制所选令牌'
+        label='Copy所选API Keys'
         type='warning'
         onClick={async () => {
           if (selectedKeys.length === 0) {
-            showError('请至少选择一个令牌！');
+            showError('请至少选择一个API Keys！');
             return;
           }
           let keys = '';
@@ -648,7 +648,7 @@ const TokensTable = () => {
           await copyText(keys);
         }}
       >
-        复制所选令牌到剪贴板
+        Copy所选API Keys到剪贴板
       </Button>
     </>
   );

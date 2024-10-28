@@ -173,7 +173,7 @@ var defaultModelRatio = map[string]float64{
 	"command-r-plus-08-2024": 1.25,
 	"deepseek-chat":          0.07,
 	"deepseek-coder":         0.07,
-	// Perplexity online 模型对搜索额外收费，有需要应自行调整，此处不计入搜索费用
+	// Perplexity online Model对搜索额外收费，有需要应自行调整，此处不计入搜索费用
 	"llama-3-sonar-small-32k-chat":   0.2 / 1000 * USD,
 	"llama-3-sonar-small-32k-online": 0.2 / 1000 * USD,
 	"llama-3-sonar-large-32k-chat":   1 / 1000 * USD,
@@ -244,7 +244,7 @@ func UpdateModelPriceByJSONString(jsonStr string) error {
 	return json.Unmarshal([]byte(jsonStr), &modelPriceMap)
 }
 
-// GetModelPrice 返回模型的价格，如果模型不存在则返回-1，false
+// GetModelPrice 返回Model的价格，如果Model不存在则返回-1，false
 func GetModelPrice(name string, printErr bool) (float64, bool) {
 	GetModelPriceMap()
 	if strings.HasPrefix(name, "gpt-4-gizmo") {

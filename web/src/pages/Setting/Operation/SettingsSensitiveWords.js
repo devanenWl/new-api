@@ -39,13 +39,13 @@ export default function SettingsSensitiveWords(props) {
         if (requestQueue.length === 1) {
           if (res.includes(undefined)) return;
         } else if (requestQueue.length > 1) {
-          if (res.includes(undefined)) return showError('部分保存失败，请重试');
+          if (res.includes(undefined)) return showError('部分保存失败，请Retry');
         }
         showSuccess('保存成功');
         props.refresh();
       })
       .catch(() => {
-        showError('保存失败，请重试');
+        showError('保存失败，请Retry');
       })
       .finally(() => {
         setLoading(false);
@@ -71,12 +71,12 @@ export default function SettingsSensitiveWords(props) {
           getFormApi={(formAPI) => (refForm.current = formAPI)}
           style={{ marginBottom: 15 }}
         >
-          <Form.Section text={'屏蔽词过滤设置'}>
+          <Form.Section text={'屏蔽词过滤Settings'}>
             <Row gutter={16}>
               <Col span={8}>
                 <Form.Switch
                   field={'CheckSensitiveEnabled'}
-                  label={'启用屏蔽词过滤功能'}
+                  label={'Enable屏蔽词过滤功能'}
                   size='large'
                   checkedText='｜'
                   uncheckedText='〇'
@@ -91,7 +91,7 @@ export default function SettingsSensitiveWords(props) {
               <Col span={8}>
                 <Form.Switch
                   field={'CheckSensitiveOnPromptEnabled'}
-                  label={'启用 Prompt 检查'}
+                  label={'Enable Prompt 检查'}
                   size='large'
                   checkedText='｜'
                   uncheckedText='〇'
@@ -124,7 +124,7 @@ export default function SettingsSensitiveWords(props) {
             </Row>
             <Row>
               <Button size='large' onClick={onSubmit}>
-                保存屏蔽词过滤设置
+                保存屏蔽词过滤Settings
               </Button>
             </Row>
           </Form.Section>

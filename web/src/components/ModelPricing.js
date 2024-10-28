@@ -39,7 +39,7 @@ function renderQuotaType(type) {
         </Tag>
       );
     default:
-      return '未知';
+      return 'Unknown';
   }
 }
 
@@ -47,7 +47,7 @@ function renderAvailable(available) {
   return available ? (
     <Popover
         content={
-          <div style={{ padding: 8 }}>您的分组可以使用该模型</div>
+          <div style={{ padding: 8 }}>您的Group可以使用该Model</div>
         }
         position='top'
         key={available}
@@ -64,7 +64,7 @@ function renderAvailable(available) {
   ) : (
     <Popover
         content={
-          <div style={{ padding: 8 }}>您的分组无权使用该模型</div>
+          <div style={{ padding: 8 }}>您的GroupNone权使用该Model</div>
         }
         position='top'
         key={available}
@@ -129,7 +129,7 @@ const ModelPricing = () => {
     {
       title: (
         <Space>
-          <span>模型名称</span>
+          <span>Model name</span>
           <Input
             placeholder='模糊搜索'
             style={{ width: 200 }}
@@ -161,7 +161,7 @@ const ModelPricing = () => {
       filteredValue,
     },
     {
-      title: '计费类型',
+      title: '计费Type',
       dataIndex: 'quota_type',
       render: (text, record, index) => {
         return renderQuotaType(parseInt(text));
@@ -169,7 +169,7 @@ const ModelPricing = () => {
       sorter: (a, b) => a.quota_type - b.quota_type,
     },
     {
-      title: '可用分组',
+      title: '可用Group',
       dataIndex: 'enable_groups',
       render: (text, record, index) => {
         // enable_groups is a string array
@@ -193,7 +193,7 @@ const ModelPricing = () => {
                     size='large'
                     onClick={() => {
                       setSelectedGroup(group);
-                      showInfo('当前查看的分组为：' + group + '，倍率为：' + groupRatio[group]);
+                      showInfo('当前查看的Group为：' + group + '，倍率为：' + groupRatio[group]);
                     }}
                   >
                     {group}
@@ -211,7 +211,7 @@ const ModelPricing = () => {
           倍率
           <Popover
             content={
-              <div style={{ padding: 8 }}>倍率是为了方便换算不同价格的模型<br/>点击查看倍率说明</div>
+              <div style={{ padding: 8 }}>倍率是为了方便换算不同价格的Model<br/>click to view倍率说明</div>
             }
             position='top'
             style={{
@@ -237,23 +237,23 @@ const ModelPricing = () => {
         let completionRatio = parseFloat(record.completion_ratio.toFixed(3));
         content = (
           <>
-            <Text>模型：{record.quota_type === 0 ? text : '无'}</Text>
+            <Text>Model：{record.quota_type === 0 ? text : 'None'}</Text>
             <br />
-            <Text>补全：{record.quota_type === 0 ? completionRatio : '无'}</Text>
+            <Text>Output:{record.quota_type === 0 ? completionRatio : 'None'}</Text>
             <br />
-            <Text>分组：{groupRatio[selectedGroup]}</Text>
+            <Text>Group：{groupRatio[selectedGroup]}</Text>
           </>
         );
         return <div>{content}</div>;
       },
     },
     {
-      title: '模型价格',
+      title: 'Model价格',
       dataIndex: 'model_price',
       render: (text, record, index) => {
         let content = text;
         if (record.quota_type === 0) {
-          // 这里的 *2 是因为 1倍率=0.002刀，请勿删除
+          // 这里的 *2 是因为 1倍率=0.002刀，请勿Delete
           let inputRatioPrice = record.model_ratio * 2 * groupRatio[selectedGroup];
           let completionRatioPrice =
             record.model_ratio *
@@ -261,14 +261,14 @@ const ModelPricing = () => {
             groupRatio[selectedGroup];
           content = (
             <>
-              <Text>提示 ${inputRatioPrice} / 1M tokens</Text>
+              <Text>Prompt ${inputRatioPrice} / 1M tokens</Text>
               <br />
-              <Text>补全 ${completionRatioPrice} / 1M tokens</Text>
+              <Text>Completion ${completionRatioPrice} / 1M tokens</Text>
             </>
           );
         } else {
           let price = parseFloat(text) * groupRatio[selectedGroup];
-          content = <>模型价格：${price}</>;
+          content = <>Model价格：${price}</>;
         }
         return <div>{content}</div>;
       },
@@ -330,10 +330,10 @@ const ModelPricing = () => {
 
   const copyText = async (text) => {
     if (await copy(text)) {
-      showSuccess('已复制：' + text);
+      showSuccess('已Copy：' + text);
     } else {
       // setSearchKeyword(text);
-      Modal.error({ title: '无法复制到剪贴板，请手动复制', content: text });
+      Modal.error({ title: 'Unable to copy to clipboard，Please copy manually', content: text });
     }
   };
 
@@ -349,21 +349,21 @@ const ModelPricing = () => {
             type="success"
             fullMode={false}
             closeIcon="null"
-            description={`您的默认分组为：${userState.user.group}，分组倍率为：${groupRatio[userState.user.group]}`}
+            description={`您的DefaultGroup为：${userState.user.group}，group rate为：${groupRatio[userState.user.group]}`}
           />
         ) : (
           <Banner
             type='warning'
             fullMode={false}
             closeIcon="null"
-            description={`您还未登陆，显示的价格为默认分组倍率: ${groupRatio['default']}`}
+            description={`您还未登陆，显示的价格为Defaultgroup rate: ${groupRatio['default']}`}
           />
         )}
         <br/>
         <Banner 
             type="info"
             fullMode={false}
-            description={<div>按量计费费用 = 分组倍率 × 模型倍率 × （提示token数 + 补全token数 × 补全倍率）/ 500000 （单位：美元）</div>}
+            description={<div>按量计费费用 = group rate × model rate × （Prompttoken数 + Completiontoken数 × Completion倍率）/ 500000 （单位：美元）</div>}
             closeIcon="null"
         />
         <br/>
@@ -376,7 +376,7 @@ const ModelPricing = () => {
           }}
           disabled={selectedRowKeys == ""}
         >
-          复制选中模型
+          Copy选中Model
         </Button>
         <Table
           style={{ marginTop: 5 }}

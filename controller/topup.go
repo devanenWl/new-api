@@ -70,19 +70,19 @@ func RequestEpay(c *gin.Context) {
 		return
 	}
 	if req.Amount < getMinTopup() {
-		c.JSON(200, gin.H{"message": "error", "data": fmt.Sprintf("充值数量不能小于 %d", getMinTopup())})
+		c.JSON(200, gin.H{"message": "error", "data": fmt.Sprintf("Recharge数量不能小于 %d", getMinTopup())})
 		return
 	}
 
 	id := c.GetInt("id")
 	group, err := model.CacheGetUserGroup(id)
 	if err != nil {
-		c.JSON(200, gin.H{"message": "error", "data": "获取用户分组失败"})
+		c.JSON(200, gin.H{"message": "error", "data": "获取UsersGroup失败"})
 		return
 	}
 	payMoney := getPayMoney(float64(req.Amount), group)
 	if payMoney < 0.01 {
-		c.JSON(200, gin.H{"message": "error", "data": "充值金额过低"})
+		c.JSON(200, gin.H{"message": "error", "data": "Recharge金额过低"})
 		return
 	}
 
@@ -101,7 +101,7 @@ func RequestEpay(c *gin.Context) {
 	tradeNo = fmt.Sprintf("USR%dNO%s", id, tradeNo)
 	client := GetEpayClient()
 	if client == nil {
-		c.JSON(200, gin.H{"message": "error", "data": "当前管理员未配置支付信息"})
+		c.JSON(200, gin.H{"message": "error", "data": "当前Administrator未配置支付信息"})
 		return
 	}
 	uri, params, err := client.Purchase(&epay.PurchaseArgs{
@@ -213,11 +213,11 @@ func EpayNotify(c *gin.Context) {
 			//user.Quota += topUp.Amount * 500000
 			err = model.IncreaseUserQuota(topUp.UserId, topUp.Amount*int(common.QuotaPerUnit))
 			if err != nil {
-				log.Printf("易支付回调更新用户失败: %v", topUp)
+				log.Printf("易支付回调更新Users失败: %v", topUp)
 				return
 			}
-			log.Printf("易支付回调更新用户成功 %v", topUp)
-			model.RecordLog(topUp.UserId, model.LogTypeTopup, fmt.Sprintf("使用在线充值成功，充值金额: %v，支付金额：%f", common.LogQuota(topUp.Amount*int(common.QuotaPerUnit)), topUp.Money))
+			log.Printf("易支付回调更新Users成功 %v", topUp)
+			model.RecordLog(topUp.UserId, model.LogTypeTopup, fmt.Sprintf("使用在线Recharge成功，Recharge金额: %v，支付金额：%f", common.LogQuota(topUp.Amount*int(common.QuotaPerUnit)), topUp.Money))
 		}
 	} else {
 		log.Printf("易支付异常回调: %v", verifyInfo)
@@ -233,18 +233,18 @@ func RequestAmount(c *gin.Context) {
 	}
 
 	if req.Amount < getMinTopup() {
-		c.JSON(200, gin.H{"message": "error", "data": fmt.Sprintf("充值数量不能小于 %d", getMinTopup())})
+		c.JSON(200, gin.H{"message": "error", "data": fmt.Sprintf("Recharge数量不能小于 %d", getMinTopup())})
 		return
 	}
 	id := c.GetInt("id")
 	group, err := model.CacheGetUserGroup(id)
 	if err != nil {
-		c.JSON(200, gin.H{"message": "error", "data": "获取用户分组失败"})
+		c.JSON(200, gin.H{"message": "error", "data": "获取UsersGroup失败"})
 		return
 	}
 	payMoney := getPayMoney(float64(req.Amount), group)
 	if payMoney <= 0.01 {
-		c.JSON(200, gin.H{"message": "error", "data": "充值金额过低"})
+		c.JSON(200, gin.H{"message": "error", "data": "Recharge金额过低"})
 		return
 	}
 	c.JSON(200, gin.H{"message": "success", "data": strconv.FormatFloat(payMoney, 'f', 2, 64)})

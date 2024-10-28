@@ -37,7 +37,7 @@ const Home = () => {
       localStorage.setItem('home_page_content', content);
     } else {
       showError(message);
-      setHomePageContent('加载首页内容失败...');
+      setHomePageContent('Failed to load homepage content...');
     }
     setHomePageContentLoaded(true);
   };
@@ -58,13 +58,13 @@ const Home = () => {
           <Card
             bordered={false}
             headerLine={false}
-            title='系统状况'
+            title='System status'
             bodyStyle={{ padding: '10px 20px' }}
           >
             <Row gutter={16}>
               <Col span={12}>
                 <Card
-                  title='系统信息'
+                  title='System information'
                   headerExtraContent={
                     <span
                       style={{
@@ -72,19 +72,19 @@ const Home = () => {
                         color: 'var(--semi-color-text-1)',
                       }}
                     >
-                      系统信息总览
+                      System information overview
                     </span>
                   }
                 >
-                  <p>名称：{statusState?.status?.system_name}</p>
+                  <p>Name:{statusState?.status?.system_name}</p>
                   <p>
-                    版本：
+                    Version:
                     {statusState?.status?.version
                       ? statusState?.status?.version
                       : 'unknown'}
                   </p>
                   <p>
-                    源码：
+                    Source code:
                     <a
                       href='https://github.com/Calcium-Ion/new-api'
                       target='_blank'
@@ -103,12 +103,12 @@ const Home = () => {
                       Apache-2.0 License
                     </a>
                   </p>
-                  <p>启动时间：{getStartTimeString()}</p>
+                  <p>Startup time:{getStartTimeString()}</p>
                 </Card>
               </Col>
               <Col span={12}>
                 <Card
-                  title='系统配置'
+                  title='System configuration'
                   headerExtraContent={
                     <span
                       style={{
@@ -116,39 +116,39 @@ const Home = () => {
                         color: 'var(--semi-color-text-1)',
                       }}
                     >
-                      系统配置总览
+                      System configuration overview
                     </span>
                   }
                 >
                   <p>
-                    邮箱验证：
+                    Email verification:
                     {statusState?.status?.email_verification === true
-                      ? '已启用'
-                      : '未启用'}
+                      ? 'Enabled'
+                      : 'Not enabled'}
                   </p>
                   <p>
-                    GitHub 身份验证：
+                    GitHub Authentication：
                     {statusState?.status?.github_oauth === true
-                      ? '已启用'
-                      : '未启用'}
+                      ? 'Enabled'
+                      : 'Not enabled'}
                   </p>
                   <p>
-                    微信身份验证：
+                    WeChat Authentication：
                     {statusState?.status?.wechat_login === true
-                      ? '已启用'
-                      : '未启用'}
+                      ? 'Enabled'
+                      : 'Not enabled'}
                   </p>
                   <p>
-                    Turnstile 用户校验：
+                    Turnstile user verification:
                     {statusState?.status?.turnstile_check === true
-                      ? '已启用'
-                      : '未启用'}
+                      ? 'Enabled'
+                      : 'Not enabled'}
                   </p>
                   <p>
                     Telegram 身份验证：
                     {statusState?.status?.telegram_oauth === true
-                      ? '已启用'
-                      : '未启用'}
+                      ? 'Enabled'
+                      : 'Not enabled'}
                   </p>
                 </Card>
               </Col>
