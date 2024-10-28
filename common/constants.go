@@ -46,8 +46,8 @@ var TelegramOAuthEnabled = false
 var TurnstileCheckEnabled = false
 var RegisterEnabled = true
 
-var EmailDomainRestrictionEnabled = false // 是否Enable邮箱域名限制
-var EmailAliasRestrictionEnabled = false  // 是否Enable邮箱别名限制
+var EmailDomainRestrictionEnabled = false // Whether to enable email domain restriction
+var EmailAliasRestrictionEnabled = false  // Whether to enable email alias restriction
 var EmailDomainWhitelist = []string{
 	"gmail.com",
 	"163.com",
